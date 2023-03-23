@@ -74,7 +74,7 @@ class InfoApp extends StatelessWidget {
                 ///contacts
                 const ContactItem(
                   icon: Icons.mail_outline,
-                  url: 'https://www.linkedin.com/in/minafaried',
+                  url: 'https://www.instagram.com/',
                 ),
                 const SizedBox(
                   height: 20,
@@ -88,7 +88,7 @@ class InfoApp extends StatelessWidget {
                 ),
                 const ContactItem(
                   icon: Icons.adb_outlined,
-                  url: 'https://www.linkedin.com/in/minafaried',
+                  url: 'https://www.facebook.com/mina.f.eldihabi',
                 ),
 
                 ///divider

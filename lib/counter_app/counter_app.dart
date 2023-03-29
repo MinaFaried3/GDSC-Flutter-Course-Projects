@@ -10,8 +10,23 @@ class CounterApp extends StatefulWidget {
 }
 
 class CounterAppState extends State<CounterApp> {
-  int counter = 0;
-  String word = 'empty';
+  late int counter;
+  late String word;
+  // late AnimationController animationController;
+  @override
+  void initState() {
+    super.initState();
+    print("===========INITSTATE++++++++++++");
+    counter = 0;
+    word = 'empty';
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    // animationController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +69,9 @@ class CounterAppState extends State<CounterApp> {
                     child: const Icon(Icons.add)),
               ],
             ),
-            SizedBox(height: 40,),
+            SizedBox(
+              height: 40,
+            ),
             Text(
               word,
               style: const TextStyle(fontSize: 20),
@@ -77,5 +94,19 @@ class CounterAppState extends State<CounterApp> {
         ),
       ),
     );
+  }
+}
+
+class Foo extends StatefulWidget {
+  const Foo({Key? key}) : super(key: key);
+
+  @override
+  State<Foo> createState() => _FooState();
+}
+
+class _FooState extends State<Foo> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

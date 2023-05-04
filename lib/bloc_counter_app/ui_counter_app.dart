@@ -1,35 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gdsc2/bloc_counter_app/counter_cubit.dart';
+import 'package:gdsc2/bloc_counter_app/counter_state.dart';
 
-class CounterApp extends StatefulWidget {
-  const CounterApp({Key? key}) : super(key: key);
+class BlocCounterApp extends StatelessWidget {
+  const BlocCounterApp({super.key});
 
-  @override
-  State<CounterApp> createState() {
-    return CounterAppState();
-  }
-}
-
-class CounterAppState extends State<CounterApp> {
-  late int counter;
-  late String word;
   // late AnimationController animationController;
-  @override
-  void initState() {
-    super.initState();
-    print("===========INITSTATE++++++++++++");
-    counter = 0;
-    word = 'empty';
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    // animationController.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    print("===STATE===");
+    String word = "";
+    late int counter;
+    var counterCubit = BlocProvider.of<CounterCubit>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Counter app"),
@@ -45,32 +28,38 @@ class CounterAppState extends State<CounterApp> {
               "Your counter is Here : ",
               style: TextStyle(fontSize: 30),
             ),
-            Text(
-              "$counter",
-              style: TextStyle(fontSize: 30),
+            BlocBuilder<CounterCubit, CounterState>(
+              builder: (context, state) {
+                if (state is CounterIncrementState) {
+                  counter = state.counter;
+                } else if (state is CounterDecrementState) {
+                  counter = state.counter;
+                } else if (state is CounterInitState) {
+                  counter = state.counter;
+                }
+                print(counter);
+                return Text(
+                  "$counter",
+                  style: const TextStyle(fontSize: 30),
+                );
+              },
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      setState(() {
-                        counter--;
-                        print("counter = $counter");
-                      });
+                      counterCubit.decrement();
                     },
                     child: const Icon(Icons.remove)),
                 ElevatedButton(
                     onPressed: () {
-                      setState(() {
-                        counter++;
-                        print("counter = $counter");
-                      });
+                      counterCubit.increment();
                     },
                     child: const Icon(Icons.add)),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Text(
@@ -80,13 +69,8 @@ class CounterAppState extends State<CounterApp> {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: TextFormField(
-                onFieldSubmitted: (String input) {
-                  setState(() {
-                    word = input;
-                  });
-                },
+                onFieldSubmitted: (String input) {},
                 onChanged: (String input) {
-                  setState(() {});
                   word = input;
                 },
               ),
@@ -95,19 +79,5 @@ class CounterAppState extends State<CounterApp> {
         ),
       ),
     );
-  }
-}
-
-class Foo extends StatefulWidget {
-  const Foo({Key? key}) : super(key: key);
-
-  @override
-  State<Foo> createState() => _FooState();
-}
-
-class _FooState extends State<Foo> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
